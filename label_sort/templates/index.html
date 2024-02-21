@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <title>Image Sorter</title>
+        <style>
+            body{
+                overflow: hidden;
+            }
+            .row {
+                margin-top: 25px;
+            }
+            .card-body {
+                display: flex; /* Add this */
+                justify-content: space-around; /* Add this */
+            }
+            .images {
+                flex: 1; /* Add this */
+            }
+            .currimage {
+                max-height: 650px;
+                max-width: 100%; /* Add this */
+            }
+            .formdiv {
+                flex: 1; /* Add this */
+                border-radius: 15px;
+                text-align: center;
+                background-color: antiquewhite;
+                font-weight: bold;
+                display: flex; /* Add this */
+                align-items: center; /* Add this */
+                justify-content: center; /* Add this */
+            }
+            .informdiv {
+                text-align: left;
+            }
+            .radio-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            }
+        </style>
+        
+        
+        
+    </head>
+    <div class="row">
+        {% if image %}
+        <div class="col-sm-10">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <div class="images">
+                        <img class="currimage" src="{{ url_for('static', filename='images/' + image) }}" alt="{{ image }}">
+                    </div>
+                    <div class="formdiv">
+                        <div class="informdiv">
+                            <form method="POST">
+                                <input type="hidden" name="image_name" value="{{ image }}">
+                                    {% for choice in choices %}
+                                        <div>
+                                            <input type="radio" id="{{ choice }}" name="choice" value="{{ choice }}">
+                                            <label for="{{ choice }}">{{ choice }}</label>
+                                        </div>
+                                    {% endfor %}
+                                    <!-- Add your new radio buttons here -->
+                                    <p> ***********************************************************************<br></p>
+                                <div class="radio-buttons">
+                                    <div>
+                                        <input type="radio" id="image_driven" name="drive_type" value="image_driven">
+                                        <label for="image_driven">image_driven</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="text_driven" name="drive_type" value="text_driven">
+                                        <label for="text_driven">text_driven</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="Mixed" name="drive_type" value="Mixed">
+                                        <label for="Mixed">Mixed</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="just_text" name="drive_type" value="just_text">
+                                        <label for="just_text">just_text</label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary submitbtn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No more images.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
