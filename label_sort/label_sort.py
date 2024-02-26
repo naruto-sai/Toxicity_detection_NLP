@@ -15,7 +15,12 @@ def index():
         image_name = request.form.get('image_name')
         choice = request.form.get('choice')
         drive_type = request.form.get('drive_type')
-
+        skip = request.form.get('skip')
+        if skip:
+            os.makedirs('static/skipped_images', exist_ok=True)
+            shutil.move(f'static/images/{image_name}', f'static/skipped_images/{image_name}')
+            session['images'] = os.listdir('static/images')
+            return redirect(url_for('index'))
         if choice is None or drive_type is None:
             # Show an error message to the user
             return redirect(url_for('index'))
